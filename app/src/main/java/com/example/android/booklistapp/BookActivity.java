@@ -30,6 +30,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 public class BookActivity extends AppCompatActivity
         implements LoaderCallbacks<List<Book>> {
 
@@ -44,6 +46,8 @@ public class BookActivity extends AppCompatActivity
     /** TextView that is displayed when the list is empty */
     private TextView mEmptyStateTextView;
 
+    //@BindView(R.id.list) ListView bookListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,7 @@ public class BookActivity extends AppCompatActivity
         BOOK_REQUEST_URL = "https://www.googleapis.com/books/v1/volumes?q=" + a11 ;
 
         ListView bookListView = (ListView) findViewById(R.id.list);
+
 
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         bookListView.setEmptyView(mEmptyStateTextView);

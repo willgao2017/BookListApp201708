@@ -26,6 +26,8 @@ import com.example.android.booklistapp.R;
 
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * An {@link BookAdapter} knows how to create a list item layout for each earthquake
  * in the data source (a list of {@link Book} objects).
@@ -35,6 +37,10 @@ import java.util.List;
  */
 public class BookAdapter extends ArrayAdapter<com.example.android.booklistapp.Book> {
 
+
+    //@BindView(R.id.primary_location) TextView primaryLocationView;
+    //primaryLocationView.setText(bookTitle);
+    //TextView primaryLocationView = (TextView) listItemView.findViewById(R.id.primary_location);
 
     public BookAdapter(Context context, List<com.example.android.booklistapp.Book> books) {
         super(context, 0, books);
@@ -59,10 +65,10 @@ public class BookAdapter extends ArrayAdapter<com.example.android.booklistapp.Bo
         String bookAuthor = currentBook.getAuthor();
         String bookTitle = currentBook.getTitle();
 
-
         // Find the TextView with view ID location
         TextView primaryLocationView = (TextView) listItemView.findViewById(R.id.primary_location);
-        // Display the location of the current earthquake in that TextView
+        //@BindView(R.id.primary_location) TextView primaryLocationView;
+        //TextView primaryLocationView = primaryLocationView01;
         primaryLocationView.setText(bookTitle);
 
         // Find the TextView with view ID location offset

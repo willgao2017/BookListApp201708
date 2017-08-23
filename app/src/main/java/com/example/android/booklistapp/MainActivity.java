@@ -32,11 +32,6 @@ public class MainActivity extends AppCompatActivity {
         numbers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //EditText answer1 = (EditText) findViewById(R.id.searchtarget);
-                //Editable answer1Editable = answer1.getText();
-                //String a1 = answer1Editable.toString();
-
                 Intent numbersIntent = new Intent(MainActivity.this, BookActivity.class);
 
                 EditText answer1 = (EditText) findViewById(R.id.searchtarget);

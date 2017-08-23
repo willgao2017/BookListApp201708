@@ -27,9 +27,6 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.android.booklistapp.Book;
-import com.example.android.booklistapp.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,23 +35,10 @@ public class BookActivity extends AppCompatActivity
 
     private static final String LOG_TAG = BookActivity.class.getName();
 
+    String BOOK_REQUEST_URL;
 
-    //Bundle bundle = getIntent().getExtras();
-    // String a11 = getIntent().getExtras().getString("some_other_key");
-
-
-    //String a11 = "usa";
-    String USGS_REQUEST_URL ;
-
-
-
-    /**
-     * Constant value for the earthquake loader ID. We can choose any integer.
-     * This really only comes into play if you're using multiple loaders.
-     */
     private static final int EARTHQUAKE_LOADER_ID = 1;
 
-    /** Adapter for the list of earthquakes */
     private com.example.android.booklistapp.BookAdapter mAdapter;
 
     /** TextView that is displayed when the list is empty */
@@ -65,25 +49,19 @@ public class BookActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
 
-
-
         String a11 = getIntent().getExtras().getString("some_other_key");
-        USGS_REQUEST_URL = "https://www.googleapis.com/books/v1/volumes?q=" + a11 ;
+        BOOK_REQUEST_URL = "https://www.googleapis.com/books/v1/volumes?q=" + a11 ;
 
-
-
-        // Find a reference to the {@link ListView} in the layout
-        ListView earthquakeListView = (ListView) findViewById(R.id.list);
+        ListView bookListView = (ListView) findViewById(R.id.list);
 
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
-        earthquakeListView.setEmptyView(mEmptyStateTextView);
+        bookListView.setEmptyView(mEmptyStateTextView);
 
-        // Create a new adapter that takes an empty list of earthquakes as input
         mAdapter = new com.example.android.booklistapp.BookAdapter(this, new ArrayList<Book>());
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
-        earthquakeListView.setAdapter(mAdapter);
+        bookListView.setAdapter(mAdapter);
 
         // Get a reference to the ConnectivityManager to check state of network connectivity
         ConnectivityManager connMgr = (ConnectivityManager)
@@ -115,7 +93,7 @@ public class BookActivity extends AppCompatActivity
     @Override
     public Loader<List<Book>> onCreateLoader(int i, Bundle bundle) {
         // Create a new loader for the given URL
-        return new com.example.android.booklistapp.BookLoader(this, USGS_REQUEST_URL);
+        return new com.example.android.booklistapp.BookLoader(this, BOOK_REQUEST_URL);
     }
 
     @Override

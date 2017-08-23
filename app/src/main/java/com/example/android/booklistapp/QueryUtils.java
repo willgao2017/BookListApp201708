@@ -34,12 +34,16 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.os.Build.VERSION_CODES.N;
+
 /**
  * Helper methods related to requesting and receiving earthquake data from USGS.
  */
 public final class QueryUtils {
 
-    /** Tag for the log messages */
+    /**
+     * Tag for the log messages
+     */
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
 
     /**
@@ -168,42 +172,51 @@ public final class QueryUtils {
             // Create a JSONObject from the JSON response string
             JSONObject baseJsonResponse = new JSONObject(bookJSON);
 
-            // Extract the JSONArray associated with the key called "features",
-            // which represents a list of features (or books).
-            JSONArray earthquakeArray = baseJsonResponse.getJSONArray("items");
+            if (baseJsonResponse.has("items")) {
 
-            // For each earthquake in the earthquakeArray, create an {@link Book} object
-            for (int i = 0; i < earthquakeArray.length(); i++) {
+                // Extract the JSONArray associated with the key called "features",
+                // which represents a list of features (or books).
+                JSONArray earthquakeArray = baseJsonResponse.getJSONArray("items");
 
-                // Get a single book at position i within the list of books
-                JSONObject currentEarthquake = earthquakeArray.getJSONObject(i);
+                // For each earthquake in the earthquakeArray, create an {@link Book} object
+                for (int i = 0; i < earthquakeArray.length(); i++) {
 
-                // For a given book, extract the JSONObject associated with the
-                // key called "properties", which represents a list of all properties
-                // for that book.
-                JSONObject properties = currentEarthquake.getJSONObject("volumeInfo");
+                    // Get a single book at position i within the list of books
+                    JSONObject currentEarthquake = earthquakeArray.getJSONObject(i);
+
+                    // For a given book, extract the JSONObject associated with the
+                    // key called "properties", which represents a list of all properties
+                    // for that book.
+                    JSONObject properties = currentEarthquake.getJSONObject("volumeInfo");
+
+                    String authors = "";
+
+                    if (properties.has("authors")) {
+
+                        JSONArray authorsArray = properties.getJSONArray("authors");
+
+                        for (int j = 0; j < authorsArray.length(); j++) {
+                            authors += authorsArray.getString(j) + "  ";
+                        }
+                    } else {
+                        authors = "Author N/A";
+                        // Authors placeholder text (e.g. "Author N/A")
+                    }
 
 
-                // Extract the value for the key called "place"
-                JSONArray authorsArray = properties.getJSONArray("authors");
+                    // Extract the value for the key called "url"
+                    String title = properties.getString("title");
 
-                String authors = "";
-                for (int j = 0; j < authorsArray.length(); j++) {
-                    authors += authorsArray.getString(j) + "  ";
+                    // Create a new {@link Book} object with the magnitude, location, time,
+                    // and url from the JSON response.
+                    com.example.android.booklistapp.Book book = new com.example.android.booklistapp.Book(authors, title);
+
+                    // Add the new {@link Book} to the list of books.
+                    books.add(book);
                 }
-
-
-                //String authors = authorsArray.getString(0);
-
-                // Extract the value for the key called "url"
-                String title = properties.getString("title");
-
-                // Create a new {@link Book} object with the magnitude, location, time,
-                // and url from the JSON response.
-                com.example.android.booklistapp.Book book = new com.example.android.booklistapp.Book(authors, title);
-
-                // Add the new {@link Book} to the list of books.
-                books.add(book);
+            } else {
+                books = null;
+                // Authors placeholder text (e.g. "Author N/A")
             }
 
         } catch (JSONException e) {

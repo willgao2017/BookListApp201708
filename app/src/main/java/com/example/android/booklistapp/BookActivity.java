@@ -55,8 +55,8 @@ public class BookActivity extends AppCompatActivity
         setContentView(R.layout.activity_book);
         ButterKnife.bind(this);
 
-        String a11 = getIntent().getExtras().getString("some_other_key");
-        BOOK_REQUEST_URL = "https://www.googleapis.com/books/v1/volumes?q=" + a11 ;
+        String a11 = getIntent().getExtras().getString("search_key");
+        BOOK_REQUEST_URL = "https://www.googleapis.com/books/v1/volumes?q=" + a11 + "&maxResults=40";
 
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         bookListView.setEmptyView(mEmptyStateTextView);
@@ -107,7 +107,7 @@ public class BookActivity extends AppCompatActivity
         loadingIndicator.setVisibility(View.GONE);
 
         // Set empty state text to display "No books found."
-        mEmptyStateTextView.setText(R.string.no_earthquakes);
+        mEmptyStateTextView.setText(R.string.no_books);
 
         mAdapter.clear();
 

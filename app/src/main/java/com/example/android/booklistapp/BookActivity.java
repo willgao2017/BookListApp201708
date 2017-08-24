@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class BookActivity extends AppCompatActivity
         implements LoaderCallbacks<List<Book>> {
@@ -46,17 +47,19 @@ public class BookActivity extends AppCompatActivity
     /** TextView that is displayed when the list is empty */
     private TextView mEmptyStateTextView;
 
-    //@BindView(R.id.list) ListView bookListView;
+    @BindView(R.id.list) ListView bookListView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
+        ButterKnife.bind(this);
 
         String a11 = getIntent().getExtras().getString("some_other_key");
         BOOK_REQUEST_URL = "https://www.googleapis.com/books/v1/volumes?q=" + a11 ;
 
-        ListView bookListView = (ListView) findViewById(R.id.list);
+        //ListView bookListView = (ListView) findViewById(R.id.list);
 
 
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);

@@ -40,7 +40,7 @@ public class BookActivity extends AppCompatActivity
 
     String BOOK_REQUEST_URL;
 
-    private static final int EARTHQUAKE_LOADER_ID = 1;
+    private static final int BOOK_LOADER_ID = 1;
 
     private com.example.android.booklistapp.BookAdapter mAdapter;
 
@@ -48,7 +48,6 @@ public class BookActivity extends AppCompatActivity
     private TextView mEmptyStateTextView;
 
     @BindView(R.id.list) ListView bookListView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +57,6 @@ public class BookActivity extends AppCompatActivity
 
         String a11 = getIntent().getExtras().getString("some_other_key");
         BOOK_REQUEST_URL = "https://www.googleapis.com/books/v1/volumes?q=" + a11 ;
-
-        //ListView bookListView = (ListView) findViewById(R.id.list);
-
 
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         bookListView.setEmptyView(mEmptyStateTextView);
@@ -86,7 +82,7 @@ public class BookActivity extends AppCompatActivity
             // Initialize the loader. Pass in the int ID constant defined above and pass in null for
             // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
             // because this activity implements the LoaderCallbacks interface).
-            loaderManager.initLoader(EARTHQUAKE_LOADER_ID, null, this);
+            loaderManager.initLoader(BOOK_LOADER_ID, null, this);
         } else {
             // Otherwise, display error
             // First, hide loading indicator so error message will be visible
@@ -113,7 +109,6 @@ public class BookActivity extends AppCompatActivity
         // Set empty state text to display "No books found."
         mEmptyStateTextView.setText(R.string.no_earthquakes);
 
-        // Clear the adapter of previous earthquake data
         mAdapter.clear();
 
         // If there is a valid list of {@link Book}s, then add them to the adapter's

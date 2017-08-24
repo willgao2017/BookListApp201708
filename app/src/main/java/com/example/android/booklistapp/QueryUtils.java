@@ -36,9 +36,7 @@ import java.util.List;
 
 import static android.os.Build.VERSION_CODES.N;
 
-/**
- * Helper methods related to requesting and receiving earthquake data from USGS.
- */
+
 public final class QueryUtils {
 
     /**
@@ -54,9 +52,6 @@ public final class QueryUtils {
     private QueryUtils() {
     }
 
-    /**
-     * Query the USGS dataset and return a list of {@link Book} objects.
-     */
     public static List<com.example.android.booklistapp.Book> fetchEarthquakeData(String requestUrl) {
         // Create URL object
         URL url = createUrl(requestUrl);
@@ -174,19 +169,13 @@ public final class QueryUtils {
 
             if (baseJsonResponse.has("items")) {
 
-                // Extract the JSONArray associated with the key called "features",
-                // which represents a list of features (or books).
                 JSONArray earthquakeArray = baseJsonResponse.getJSONArray("items");
 
-                // For each earthquake in the earthquakeArray, create an {@link Book} object
                 for (int i = 0; i < earthquakeArray.length(); i++) {
 
                     // Get a single book at position i within the list of books
                     JSONObject currentEarthquake = earthquakeArray.getJSONObject(i);
 
-                    // For a given book, extract the JSONObject associated with the
-                    // key called "properties", which represents a list of all properties
-                    // for that book.
                     JSONObject properties = currentEarthquake.getJSONObject("volumeInfo");
 
                     String authors = "";
@@ -203,12 +192,9 @@ public final class QueryUtils {
                         // Authors placeholder text (e.g. "Author N/A")
                     }
 
-
                     // Extract the value for the key called "url"
                     String title = properties.getString("title");
 
-                    // Create a new {@link Book} object with the magnitude, location, time,
-                    // and url from the JSON response.
                     com.example.android.booklistapp.Book book = new com.example.android.booklistapp.Book(authors, title);
 
                     // Add the new {@link Book} to the list of books.
@@ -216,7 +202,6 @@ public final class QueryUtils {
                 }
             } else {
                 books = null;
-                // Authors placeholder text (e.g. "Author N/A")
             }
 
         } catch (JSONException e) {

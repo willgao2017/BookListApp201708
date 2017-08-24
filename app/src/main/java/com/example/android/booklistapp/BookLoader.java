@@ -22,10 +22,6 @@ import com.example.android.booklistapp.QueryUtils;
 
 import java.util.List;
 
-/**
- * Loads a list of earthquakes by using an AsyncTask to perform the
- * network request to the given URL.
- */
 public class BookLoader extends AsyncTaskLoader<List<com.example.android.booklistapp.Book>> {
 
     /** Tag for log messages */

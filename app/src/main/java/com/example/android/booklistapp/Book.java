@@ -18,9 +18,7 @@ package com.example.android.booklistapp;
 
 public class Book {
 
-
     private String mAuthor;
-
     private String mTitle;
 
     public Book(String author, String title) {
@@ -28,16 +26,10 @@ public class Book {
         mTitle = title;
     }
 
-    /**
-     * Returns the magnitude of the earthquake.
-     */
     public String getAuthor() {
         return mAuthor;
     }
-
     public String getTitle() {
         return mTitle;
     }
-
-
 }
